@@ -140,4 +140,4 @@ with gr.Blocks() as demo:
     btn.click(translate_text, inputs=[source_lang, target_lang, source_text, country], outputs=[translation_1, reflection, translation_diff], queue=True)
     btn.click(update_ui, inputs=[translation_1, reflection, translation_diff], outputs=[translation_1, reflection, translation_diff], queue=True)
 
-demo.launch(server_port=7690)
+demo.launch()
