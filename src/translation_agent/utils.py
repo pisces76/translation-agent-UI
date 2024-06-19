@@ -10,7 +10,9 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 
 load_dotenv()  # read local .env file
-client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+model = os.getenv("OPENAI_MODEL") or "gpt-4-turbo"
+client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"), base_url=os.getenv("OPENAI_BASE_URL"))
+
 
 MAX_TOKENS_PER_CHUNK = (
     1000  # if text is more than this many tokens, we'll break it up into
@@ -21,7 +23,7 @@ MAX_TOKENS_PER_CHUNK = (
 def get_completion(
     prompt: str,
     system_message: str = "You are a helpful assistant.",
-    model: str = "gpt-4-turbo",
+    model: str = model,
     temperature: float = 0.3,
     json_mode: bool = False,
 ) -> Union[str, dict]:

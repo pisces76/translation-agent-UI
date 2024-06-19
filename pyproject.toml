@@ -20,6 +20,7 @@ pysrt = "^1.1.2"
 icecream = "^2.1.3"
 langchain-text-splitters = "^0.0.1"
 python-dotenv = "^1.0.1"
+gradio = "^4.36.1"
 
 [tool.poetry.group.dev]
 optional = true
