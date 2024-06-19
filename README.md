@@ -5,7 +5,8 @@ This is a gradio UI for Andrew Ng's [Translation Agent](https://github.com/andre
 2. Support other LLM models as translation engine; 
 3. Highlight the differences between initial translation and final translation; 
 
-
+<img width="1280" src="./examples/demo-zh_en.png" alt="Preview"/>
+<img width="1280" src="./examples/demo-en_zh.png" alt="Preview"/>
 
 ## Getting Started
 
