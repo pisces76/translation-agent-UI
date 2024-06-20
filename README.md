@@ -22,10 +22,10 @@ To get started with `translation-agent-UI`, follow these steps:
 pip install poetry 
 ```
 
-- A .env file with a OPENAI_API_KEY is required to run the workflow. Please copy .env.sample to .env and modified the parameters. Following is an example to use deekseek LLM as a translation engine.
-OPENAI_API_KEY="sk-xxxx"
-OPENAI_BASE_URL="https://api.deepseek.com"
-OPENAI_MODEL = "deepseek-chat"
+- A .env file with a OPENAI_API_KEY is required to run the workflow. Please copy .env.sample to .env and modified the parameters. Following is an example to use deekseek LLM as a translation engine.  
+OPENAI_API_KEY="sk-xxxx"  
+OPENAI_BASE_URL="https://api.deepseek.com"  
+OPENAI_MODEL = "deepseek-chat"  
 
 - Clone the repo and install the dependencies:
 ```bash
