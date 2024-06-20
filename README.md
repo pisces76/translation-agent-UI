@@ -36,7 +36,7 @@ poetry shell # activates virtual environment
 ```
 ### Usage:
 ```python
-python gr_app.py  
+python app.py  
 ```
 The web server will be running on local URL:  http://127.0.0.1:7860 by default.
 
