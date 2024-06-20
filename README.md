@@ -5,6 +5,9 @@ This is a gradio UI for Andrew Ng's [Translation Agent](https://github.com/andre
 2. Support other LLM models as translation engine; 
 3. Highlight the differences between initial translation and final translation; 
 
+Welcome to visit the demo website:  
+https://huggingface.co/spaces/miaohaiyuan/translation-agent-UI
+
 <img width="1280" src="./examples/demo-zh_en.png" alt="Preview"/>
 <img width="1280" src="./examples/demo-en_zh.png" alt="Preview"/>
 
@@ -26,19 +29,28 @@ OPENAI_MODEL = "deepseek-chat"
 
 - Clone the repo and install the dependencies:
 ```bash
-git clone https://github.com/andrewyng/translation-agent.git
+git clone https://github.com/pisces76/translation-agent-UI
 cd translation-agent
 poetry install
 poetry shell # activates virtual environment
 ```
 ### Usage:
+```python
 python gr_app.py  
+```
 The web server will be running on local URL:  http://127.0.0.1:7860 by default.
 
+You can still use the original function call to invoke tranlation_agent,  for example:
+```python
+import translation_agent as ta
+source_lang, target_lang, country = "English", "Spanish", "Mexico"
+translation = ta.translate(source_lang, target_lang, source_text, country)
+```
+See examples/example_script.py for an example script to try out.
 
 ## License
 
-Translation Agent is released under the **MIT License**. You are free to use, modify, and distribute the code
+Translation Agent UI is released under the **MIT License**. You are free to use, modify, and distribute the code
 for both commercial and non-commercial purposes.
 
 
