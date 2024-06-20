@@ -53,4 +53,10 @@ See examples/example_script.py for an example script to try out.
 Translation Agent UI is released under the **MIT License**. You are free to use, modify, and distribute the code
 for both commercial and non-commercial purposes.
 
+## Donations
+If you find this project useful and would like to support it, please consider making a donation. Your support will help to ensure the continuity and development of the project.
+
+### WeChat Pay
+<img width="180" src="https://raw.githubusercontent.com/pisces76/pisces76/master/wechat-reward.jpg">
+
 
