@@ -56,7 +56,7 @@ for both commercial and non-commercial purposes.
 ## Donations
 If you find this project useful and would like to support it, please consider making a donation. Your support will help to ensure the continuity and development of the project.
 
-### WeChat Pay
+### WeChat Reward
 <img width="180" src="https://raw.githubusercontent.com/pisces76/pisces76/master/wechat-reward.jpg">
 
 

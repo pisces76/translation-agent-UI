@@ -24,18 +24,26 @@ def diff_texts(text1, text2, lang):
     ic(lang)
     if lang == '中文':
         return [
-            (token[2:], token[0] if token[0] != " " else None)
+            (token[2:], 
+             "+" if token[0] == "+" else
+             "-" if token[0] == "-" else
+             "~" if token[0] == "?" else
+             None)
             for token in d.compare(text1, text2)
-            if token[0] in ["+", " "]
+            if token[0] in ["+", "-", "?", " "]
         ]
     else:
         words1 = re.findall(r'\S+|\s+', text1)
         words2 = re.findall(r'\S+|\s+', text2)
 
         return [
-            (token[2:], token[0] if token[0] != " " else None)
+            (token[2:], 
+             "+" if token[0] == "+" else
+             "-" if token[0] == "-" else
+             "~" if token[0] == "?" else
+             None)
             for token in d.compare(words1, words2)
-            if token[0] in ["+", " "]
+            if token[0] in ["+", "-", "?", " "]
         ]
     
 
@@ -51,18 +59,18 @@ def translate_text(source_lang, target_lang, source_text, country, max_tokens=MA
         translation_1 = one_chunk_initial_translation(
             source_lang, target_lang, source_text
         )
-        yield translation_1, None, None
+        yield translation_1, None, None, None
 
         reflection = one_chunk_reflect_on_translation(
             source_lang, target_lang, source_text, translation_1, country
         )
-        yield translation_1, reflection, None
+        yield translation_1, reflection, None, None
 
         translation_2 = one_chunk_improve_translation(
             source_lang, target_lang, source_text, translation_1, reflection
         )
         translation_diff = diff_texts(translation_1, translation_2, target_lang)
-        yield translation_1, reflection, translation_diff
+        yield translation_1, reflection, translation_diff, translation_2
 
     else:
         ic("Translating text as multiple chunks")
@@ -86,7 +94,7 @@ def translate_text(source_lang, target_lang, source_text, country, max_tokens=MA
         )
         ic(translation_1_chunks)
         translation_1 = "".join(translation_1_chunks)
-        yield translation_1, None, None
+        yield translation_1, None, None, None
 
         reflection_chunks = multichunk_reflect_on_translation(
             source_lang,
@@ -97,7 +105,7 @@ def translate_text(source_lang, target_lang, source_text, country, max_tokens=MA
         )
         ic(reflection_chunks)
         reflection = "".join(reflection_chunks)
-        yield translation_1, reflection, None
+        yield translation_1, reflection, None, None
 
         translation_2_chunks = multichunk_improve_translation(
             source_lang,
@@ -110,12 +118,11 @@ def translate_text(source_lang, target_lang, source_text, country, max_tokens=MA
         translation_2 = "".join(translation_2_chunks)
         translation_diff = diff_texts(translation_1, translation_2, target_lang)
         
-        yield translation_1, reflection, translation_diff
+        yield translation_1, reflection, translation_diff, translation_2
         
 
-
 def update_ui(translation_1, reflection, translation_diff):
-    return gr.update(value=translation_1), gr.update(value=reflection), gr.update(value=translation_diff)
+    return gr.update(value=translation_1), gr.update(value=reflection), gr.update(value=translation_diff), gr.update(value=translation_2)
 
 with gr.Blocks() as demo:
     gr.Markdown("# Andrew Ng's Translation Agent ")
@@ -128,16 +135,22 @@ with gr.Blocks() as demo:
     btn = gr.Button("Translate")
 
     with gr.Row():
-        translation_1 = gr.Textbox(label="Initial Translation", lines=3)
-        reflection = gr.Textbox(label="Reflection", lines=3)
+        translation_1 = gr.Textbox(label="Initial Translation", lines=3, show_copy_button=True)
+        reflection = gr.Textbox(label="Reflection", lines=3, show_copy_button=True)
 
-    translation_diff = gr.HighlightedText  (label="Final Translation",
-                                            combine_adjacent=True,
-                                            show_legend=True,
-                                            color_map={"+": "red"})
-    #translation = gr.Textbox(label="Final Translation", lines=5, show_copy_button=True)
+    translation_diff = gr.HighlightedText(
+        label="Comparison",
+        combine_adjacent=True,
+        show_legend=True,
+        color_map={
+            "+": "green",   # 新增的文本显示为绿色
+            "-": "red",     # 删除的文本显示为红色
+            "~": "yellow"   # 修改的文本显示为黄色
+        }
+    )
+    translation_2 = gr.Textbox(label="Final Translation", lines=5, show_copy_button=True)
 
-    btn.click(translate_text, inputs=[source_lang, target_lang, source_text, country], outputs=[translation_1, reflection, translation_diff], queue=True)
-    btn.click(update_ui, inputs=[translation_1, reflection, translation_diff], outputs=[translation_1, reflection, translation_diff], queue=True)
+    btn.click(translate_text, inputs=[source_lang, target_lang, source_text, country], outputs=[translation_1, reflection, translation_diff, translation_2], queue=True)
+    btn.click(update_ui, inputs=[translation_1, reflection, translation_diff], outputs=[translation_1, reflection, translation_diff, translation_2], queue=True)
 
 demo.launch()
